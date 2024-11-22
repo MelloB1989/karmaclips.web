@@ -1,11 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: [
-      "images.unsplash.com",
-      "avatars.githubusercontent.com",
-      "www.videoservice.pro",
-    ],
     remotePatterns: [
       {
         protocol: "https",
@@ -18,6 +13,22 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "github.com",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "www.videoservice.pro",
+      },
+      {
+        hostname: "cdn.dribbble.com",
+        protocol: "https",
       },
     ],
   },

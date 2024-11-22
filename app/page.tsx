@@ -10,6 +10,7 @@ import { ServicesSection } from "@/components/layout/sections/services";
 import { SponsorsSection } from "@/components/layout/sections/sponsors";
 import { TeamSection } from "@/components/layout/sections/team";
 import { TestimonialSection } from "@/components/layout/sections/testimonial";
+import { Navbar } from "@/components/layout/navbar";
 
 export const metadata = {
   title: "KarmaClips - Your AI Video Editor",
@@ -44,6 +45,7 @@ export const metadata = {
 export default function Home() {
   return (
     <>
+      <Navbar />
       <HeroSection />
       <SponsorsSection />
       <BenefitsSection />
