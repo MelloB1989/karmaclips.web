@@ -16,10 +16,6 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "images.unsplash.com",
-      },
-      {
-        protocol: "https",
         hostname: "avatars.githubusercontent.com",
       },
       {
@@ -27,10 +23,28 @@ const nextConfig = {
         hostname: "www.videoservice.pro",
       },
       {
-        hostname: "cdn.dribbble.com",
         protocol: "https",
+        hostname: "cdn.dribbble.com",
       },
     ],
+  },
+
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Cross-Origin-Opener-Policy",
+            value: "same-origin",
+          },
+          {
+            key: "Cross-Origin-Embedder-Policy",
+            value: "require-corp",
+          },
+        ],
+      },
+    ];
   },
 };
 

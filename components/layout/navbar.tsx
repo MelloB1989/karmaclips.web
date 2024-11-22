@@ -1,5 +1,5 @@
 "use client";
-import { ChevronsDown, Github, Menu, Videotape } from "lucide-react";
+import { Github, Menu, Videotape } from "lucide-react";
 import React from "react";
 import {
   Sheet,
