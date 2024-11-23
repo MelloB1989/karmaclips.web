@@ -26,6 +26,22 @@ const nextConfig = {
         protocol: "https",
         hostname: "cdn.dribbble.com",
       },
+      {
+        protocol: "https",
+        hostname: "img.getimg.ai",
+      },
+      {
+        protocol: "https",
+        hostname: "easy-peasy.ai",
+      },
+      {
+        protocol: "https",
+        hostname: "chatai.com",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.basedlabs.ai",
+      },
     ],
   },
 
