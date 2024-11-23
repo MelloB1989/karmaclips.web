@@ -4,6 +4,7 @@ import * as React from "react";
 import {
   BookOpen,
   Bot,
+  File,
   Frame,
   LifeBuoy,
   Map,
@@ -42,58 +43,35 @@ const data = {
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "Image Editor",
+          url: "/dashboard/image-editor",
         },
         {
-          title: "Starred",
-          url: "#",
+          title: "Video Editor",
+          url: "/dashboard/video-editor",
         },
         {
-          title: "Settings",
-          url: "#",
+          title: "Converter",
+          url: "/dashboard/converter",
         },
       ],
     },
     {
-      title: "Models",
+      title: "AI",
       url: "#",
       icon: Bot,
       items: [
         {
-          title: "Genesis",
-          url: "#",
+          title: "Image Gen",
+          url: "/dashboard/image-gen",
         },
         {
-          title: "Explorer",
-          url: "#",
+          title: "Video Gen",
+          url: "/dashboard/video-gen",
         },
         {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
+          title: "Script Gen",
+          url: "/dashboard/script-gen",
         },
       ],
     },
@@ -135,19 +113,14 @@ const data = {
   ],
   projects: [
     {
-      name: "Design Engineering",
+      name: "My Projects",
       url: "#",
       icon: Frame,
     },
     {
-      name: "Sales & Marketing",
+      name: "My Assets",
       url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
+      icon: File,
     },
   ],
 };

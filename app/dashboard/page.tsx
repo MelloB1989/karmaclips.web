@@ -7,6 +7,7 @@ export default async function Dashboard() {
   if (!session?.user.jwt) {
     redirect(`/auth/login`);
   }
+  redirect(`/dashboard/video`);
 
   return <DashboardPage />;
 }
