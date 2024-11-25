@@ -22,25 +22,23 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import Confetti from "react-confetti";
+import { useImageGenStore } from "@/app/states/image-gen";
 // import { useWindowSize } from "react-use";
 
 export default function ImageGenerator({ type }: { type: string }) {
-  const [loading, setLoading] = useState(false);
-  const [numImages, setNumImages] = useState(1);
+  const {
+    loading,
+    error,
+    setPrompt,
+    setModel,
+    setBatchSize,
+    generateImage,
+    batch_size,
+    showConfetti,
+    setShowConfetti,
+  } = useImageGenStore();
   const [seed, setSeed] = useState("7163666997");
   const [randomSeed, setRandomSeed] = useState(false);
-  const [showConfetti, setShowConfetti] = useState(false);
-  // const { width, height } = useWindowSize();
-
-  const handleGenerate = async () => {
-    setLoading(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    setLoading(false);
-    // Trigger confetti
-    setShowConfetti(true);
-    setTimeout(() => setShowConfetti(false), 5000); // Hide confetti after 5 seconds
-  };
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -76,7 +74,8 @@ export default function ImageGenerator({ type }: { type: string }) {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                handleGenerate();
+                setModel("sd");
+                generateImage();
               }}
               className="space-y-6"
             >
@@ -88,6 +87,7 @@ export default function ImageGenerator({ type }: { type: string }) {
                     id="prompt"
                     placeholder="A futuristic cityscape with flying cars..."
                     className="pl-10 bg-black border-gray-800"
+                    onChange={(e) => setPrompt(e.target.value)}
                   />
                 </div>
               </div>
@@ -111,10 +111,10 @@ export default function ImageGenerator({ type }: { type: string }) {
 
               <div className="space-y-4">
                 <div>
-                  <Label>Number of Images ({numImages})</Label>
+                  <Label>Number of Images ({batch_size})</Label>
                   <Slider
-                    value={[numImages]}
-                    onValueChange={([value]) => setNumImages(value)}
+                    value={[batch_size]}
+                    onValueChange={([value]) => setBatchSize(value)}
                     max={4}
                     min={1}
                     step={1}

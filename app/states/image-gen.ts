@@ -19,6 +19,8 @@ interface ImageGenState {
   error: string;
   setError: (error: string) => void;
   loading: boolean;
+  showConfetti: boolean;
+  setShowConfetti: (showConfetti: boolean) => void;
 }
 
 export const useImageGenStore = create<ImageGenState>((set, get) => ({
@@ -38,6 +40,8 @@ export const useImageGenStore = create<ImageGenState>((set, get) => ({
   error: "",
   setError: (error) => set({ error }),
   loading: false,
+  showConfetti: false,
+  setShowConfetti: (showConfetti) => set({ showConfetti }),
   generateImage: async () => {
     set({ loading: true });
     const { prompt, model, height, width, batch_size } = get();

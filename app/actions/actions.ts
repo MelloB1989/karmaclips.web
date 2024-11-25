@@ -52,6 +52,7 @@ export async function createImage(
       },
     );
     const data = response.data;
+    // console.log(data);
     if (response.status === 200) return data.data;
   } catch (e) {
     console.error("API Error:", e);
