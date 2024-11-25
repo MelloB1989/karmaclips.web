@@ -81,7 +81,7 @@ export default function Dash({ page }: { page: string }) {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>{Features[page].name}</BreadcrumbPage>
+                  <BreadcrumbPage>{Features[page]?.name}</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
