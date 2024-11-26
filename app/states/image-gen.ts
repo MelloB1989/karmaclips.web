@@ -52,17 +52,15 @@ export const useImageGenStore = create<ImageGenState>((set, get) => ({
     }
     const jobId = await createImage(model, prompt, height, width, batch_size);
     var status = "pending";
-    while (status !== "completed") {
-      setTimeout(async () => {
-        const jobData = await getJob(jobId);
-        status = jobData.status;
-        if (status === "completed") {
-          set({ imageURI: jobData.image_uri });
-          set({ loading: false });
-          return;
-        }
-      }, 5000);
-    }
+    const intervalId = setInterval(async () => {
+      const jobData = await getJob(jobId);
+      status = jobData.status;
+      if (status === "completed") {
+        set({ imageURI: jobData.image_uri });
+        set({ loading: false });
+        clearInterval(intervalId); // Stop the interval when done
+      }
+    }, 5000);
     return;
   },
 }));
