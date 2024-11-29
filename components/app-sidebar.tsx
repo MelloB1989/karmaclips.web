@@ -11,6 +11,7 @@ import {
   PieChart,
   Send,
   Settings2,
+  Sparkle,
   SquareTerminal,
   Videotape,
 } from "lucide-react";
@@ -116,6 +117,11 @@ const data = {
       name: "My Projects",
       url: "#",
       icon: Frame,
+    },
+    {
+      name: "My Generations",
+      url: "/dashboard/generations",
+      icon: Sparkle,
     },
     {
       name: "My Assets",
