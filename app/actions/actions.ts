@@ -27,6 +27,7 @@ export async function registerUser(
 export async function createImage(
   model: string,
   prompt: string,
+  negative_prompt: string,
   height: number,
   width: number,
   batch_size: number,
@@ -41,6 +42,7 @@ export async function createImage(
       {
         model,
         prompt,
+        negative_prompt,
         height,
         width,
         batch_size,
@@ -52,7 +54,7 @@ export async function createImage(
       },
     );
     const data = response.data;
-    // console.log(data);
+    console.log(data.data);
     if (response.status === 200) return data.data;
   } catch (e) {
     console.error("API Error:", e);
@@ -66,8 +68,8 @@ export async function getJob(jobId: string) {
     return null;
   }
   try {
-    const response = await axios.post(
-      `${config.api}/${config.api_v}/job/${jobId}`,
+    const response = await axios.get(
+      `${config.api}/${config.api_v}/gen/job/${jobId}`,
       {
         headers: {
           Authorization: `Bearer ${session.user.jwt}`,

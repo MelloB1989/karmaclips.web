@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Loader2, Sparkles, ImageIcon, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,6 +23,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import Confetti from "react-confetti";
 import { useImageGenStore } from "@/app/states/image-gen";
+import Image from "next/image";
 // import { useWindowSize } from "react-use";
 
 export default function ImageGenerator({ type }: { type: string }) {
@@ -34,8 +35,10 @@ export default function ImageGenerator({ type }: { type: string }) {
     setBatchSize,
     generateImage,
     batch_size,
+    setNegativePrompt,
     showConfetti,
-    setShowConfetti,
+    imageURI,
+    prompt,
   } = useImageGenStore();
   const [seed, setSeed] = useState("7163666997");
   const [randomSeed, setRandomSeed] = useState(false);
@@ -66,7 +69,16 @@ export default function ImageGenerator({ type }: { type: string }) {
               </div>
             ) : (
               <div className="absolute inset-0 flex items-center justify-center text-gray-500">
-                <p>Your generated image will appear here</p>
+                {imageURI === "" ? (
+                  <p>Your generated image will appear here</p>
+                ) : (
+                  <Image
+                    src={imageURI}
+                    height={896}
+                    width={1152}
+                    alt={prompt}
+                  />
+                )}
               </div>
             )}
           </Card>
@@ -74,11 +86,16 @@ export default function ImageGenerator({ type }: { type: string }) {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                setModel("sd");
+                setModel("dreamshaper");
                 generateImage();
               }}
               className="space-y-6"
             >
+              {error !== "" && (
+                <div className="p-4 bg-red-500/20 text-red-500 rounded-md">
+                  {error}
+                </div>
+              )}
               <div className="space-y-2">
                 <Label htmlFor="prompt">Prompt</Label>
                 <div className="relative">
@@ -104,6 +121,7 @@ export default function ImageGenerator({ type }: { type: string }) {
                     <Input
                       placeholder="low quality, blurry, distorted..."
                       className="bg-black border-gray-800"
+                      onChange={(e) => setNegativePrompt(e.target.value)}
                     />
                   </AccordionContent>
                 </AccordionItem>
@@ -208,7 +226,7 @@ export default function ImageGenerator({ type }: { type: string }) {
             </form>
           </Card>
         </div>
-        {!loading && (
+        {showConfetti && (
           <Confetti
             width={1000}
             height={1000}

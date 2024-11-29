@@ -42,6 +42,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "cdn.basedlabs.ai",
       },
+      {
+        hostname: "coffeecodes-cdn-public.s3.ap-south-1.amazonaws.com",
+        protocol: "https",
+      },
     ],
   },
 

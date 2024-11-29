@@ -44,21 +44,35 @@ export const useImageGenStore = create<ImageGenState>((set, get) => ({
   setShowConfetti: (showConfetti) => set({ showConfetti }),
   generateImage: async () => {
     set({ loading: true });
-    const { prompt, model, height, width, batch_size } = get();
+    const { prompt, negativePrompt, model, height, width, batch_size } = get();
     if (prompt === "") {
       set({ error: "Please enter a prompt" });
       set({ loading: false });
       return;
     }
-    const jobId = await createImage(model, prompt, height, width, batch_size);
+    const jobId = await createImage(
+      model,
+      prompt,
+      negativePrompt,
+      height,
+      width,
+      batch_size,
+    );
     var status = "pending";
     const intervalId = setInterval(async () => {
       const jobData = await getJob(jobId);
       status = jobData.status;
       if (status === "completed") {
-        set({ imageURI: jobData.image_uri });
+        set({ imageURI: jobData.url });
         set({ loading: false });
         clearInterval(intervalId); // Stop the interval when done
+        set({ showConfetti: true });
+        return () =>
+          clearTimeout(
+            setTimeout(() => {
+              set({ showConfetti: false });
+            }, 2000),
+          );
       }
     }, 5000);
     return;
