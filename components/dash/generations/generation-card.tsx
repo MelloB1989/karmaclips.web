@@ -2,13 +2,7 @@ import Image from "next/image";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Heart, Download, Maximize } from "lucide-react";
-
-interface Generation {
-  id: number;
-  imageUrl: string;
-  createdAt: Date;
-  isFavorite: boolean;
-}
+import { Generation } from "@/app/states/generations";
 
 interface GenerationCardProps {
   generation: Generation;
@@ -17,12 +11,12 @@ interface GenerationCardProps {
 export function GenerationCard({ generation }: GenerationCardProps) {
   const handleDownload = () => {
     // Implement download logic here
-    console.log("Downloading image:", generation.imageUrl);
+    console.log("Downloading image:", generation.media_uri);
   };
 
   const handleView = () => {
     // Implement view logic here
-    console.log("Viewing image:", generation.imageUrl);
+    console.log("Viewing image:", generation.media_uri);
   };
 
   const handleToggleFavorite = () => {
@@ -35,14 +29,14 @@ export function GenerationCard({ generation }: GenerationCardProps) {
       <CardContent className="p-0">
         <div className="relative aspect-square">
           <Image
-            src={generation.imageUrl}
+            src={generation.media_uri}
             alt={`AI Generation ${generation.id}`}
             layout="fill"
             objectFit="cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
             <div className="absolute bottom-2 left-2 text-xs text-gray-300">
-              {generation.createdAt.toLocaleDateString()}
+              {new Date(generation.timestamp).toLocaleDateString()}
             </div>
           </div>
         </div>
@@ -56,9 +50,7 @@ export function GenerationCard({ generation }: GenerationCardProps) {
         >
           <Heart
             className={
-              generation.isFavorite
-                ? "fill-green-500 text-green-500"
-                : "text-gray-400"
+              generation.id ? "fill-green-500 text-green-500" : "text-gray-400"
             }
           />
         </Button>

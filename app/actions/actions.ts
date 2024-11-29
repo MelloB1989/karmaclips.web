@@ -83,3 +83,25 @@ export async function getJob(jobId: string) {
     return { type: "error", error: "Error creating image" };
   }
 }
+
+export async function getGenerations() {
+  const session = await auth();
+  if (!session?.user.jwt) {
+    return null;
+  }
+  try {
+    const response = await axios.get(
+      `${config.api}/${config.api_v}/generations`,
+      {
+        headers: {
+          Authorization: `Bearer ${session.user.jwt}`,
+        },
+      },
+    );
+    const data = response.data;
+    if (response.status === 200) return data.data;
+  } catch (e) {
+    console.error("API Error:", e);
+    return { type: "error", error: "Error creating image" };
+  }
+}

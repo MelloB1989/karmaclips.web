@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -10,32 +10,20 @@ import {
 } from "@/components/ui/select";
 import { GenerationCard } from "./generation-card";
 import { AlertCircle } from "lucide-react";
-
-// Mock data for demonstration purposes
-const mockGenerations = [];
+import { useGenerationStore } from "@/app/states/generations";
 
 export function GenerationsGrid() {
-  const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
-
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  const sortedGenerations = [...mockGenerations].sort((a, b) => {
-    return sortOrder === "newest"
-      ? b.createdAt.getTime() - a.createdAt.getTime()
-      : a.createdAt.getTime() - b.createdAt.getTime();
-  });
-
-  const recentGenerations = sortedGenerations.filter(
-    (gen) => gen.createdAt >= today,
-  );
-  const favoriteGenerations = sortedGenerations.filter((gen) => gen.isFavorite);
-  const otherGenerations = sortedGenerations.filter(
-    (gen) => gen.createdAt < today && !gen.isFavorite,
-  );
-
-  const noGenerations = sortedGenerations.length === 0;
-
+  const {
+    sortOrder,
+    setSortOrder,
+    getGen,
+    recent_generations,
+    favorite_generations,
+    generations,
+  } = useGenerationStore();
+  useEffect(() => {
+    getGen();
+  }, []);
   return (
     <div className="space-y-8">
       <div className="flex justify-end mb-4">
@@ -52,7 +40,7 @@ export function GenerationsGrid() {
         </Select>
       </div>
 
-      {noGenerations ? (
+      {!(generations.length > 0) ? (
         <div className="flex flex-col items-center justify-center p-8 bg-gray-950 rounded-lg border border-gray-800">
           <AlertCircle className="w-16 h-16 text-green-400 mb-4" />
           <h2 className="text-2xl font-semibold mb-2 text-green-500">
@@ -64,39 +52,26 @@ export function GenerationsGrid() {
         </div>
       ) : (
         <>
-          {recentGenerations.length > 0 && (
+          {recent_generations.length > 0 && (
             <section className="mb-8">
               <h2 className="text-2xl font-semibold mb-4 text-green-400">
                 Recent Generations
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {recentGenerations.map((generation) => (
+                {recent_generations.map((generation) => (
                   <GenerationCard key={generation.id} generation={generation} />
                 ))}
               </div>
             </section>
           )}
 
-          {favoriteGenerations.length > 0 && (
+          {favorite_generations.length > 0 && (
             <section className="mb-8">
               <h2 className="text-2xl font-semibold mb-4 text-green-400">
                 Favorite Generations
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {favoriteGenerations.map((generation) => (
-                  <GenerationCard key={generation.id} generation={generation} />
-                ))}
-              </div>
-            </section>
-          )}
-
-          {otherGenerations.length > 0 && (
-            <section>
-              <h2 className="text-2xl font-semibold mb-4 text-green-400">
-                Other Generations
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {otherGenerations.map((generation) => (
+                {favorite_generations.map((generation) => (
                   <GenerationCard key={generation.id} generation={generation} />
                 ))}
               </div>
