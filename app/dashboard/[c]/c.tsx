@@ -23,6 +23,7 @@ import ImageGenerator from "./image-gen";
 import VideoGenerator from "./video-gen";
 import ScriptGenerator from "./script-gen";
 import GenerationsPage from "./generations";
+import Assets from "./assets";
 
 export default function Dash({ page }: { page: string }) {
   const { setCurrent } = useDashStore();
@@ -66,6 +67,10 @@ export default function Dash({ page }: { page: string }) {
     generations: {
       name: "Generations",
       component: GenerationsPage,
+    },
+    assets: {
+      name: "Assets",
+      component: Assets,
     },
   };
 

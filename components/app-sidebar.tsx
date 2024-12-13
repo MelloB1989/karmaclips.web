@@ -125,7 +125,7 @@ const data = {
     },
     {
       name: "My Assets",
-      url: "#",
+      url: "/dashboard/assets",
       icon: File,
     },
   ],
